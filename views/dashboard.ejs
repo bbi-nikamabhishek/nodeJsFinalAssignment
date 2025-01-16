@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <!-- Add Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #283c86, #45a247);
+      color: #444;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      color: #333;
+      font-weight: 700;
+    }
+
+    .logout-btn {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 30px;
+      text-decoration: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .logout-btn i {
+      font-size: 1.2rem;
+    }
+
+    .logout-btn:hover {
+      background: linear-gradient(135deg, #c0392b, #e74c3c);
+      transform: scale(1.05);
+    }
+
+    .role {
+      display: inline-block;
+      background-color: #1abc9c;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      margin-top: 5px; /* Reduced Margin */
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .actions {
+      margin: 20px 0;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .actions a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      color: #fff;
+      text-decoration: none;
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .actions a:hover {
+      background: linear-gradient(135deg, #2980b9, #3498db);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .actions a i {
+      font-size: 1.2rem;
+    }
+
+    .blogs-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    /* Blog Card Container */
+  .blog-card {
+    background: linear-gradient(145deg, #ffffff, #f3f3f3);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 280px; /* Adjust as per content */
+  }
+
+  /* Hover effect */
+  .blog-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(145deg, #f8f8f8, #e8e8e8);
+  }
+
+  /* Blog Title */
+  .blog-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp:2/* Limit title to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Blog Content */
+  .blog-card p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex-grow: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Limit content to 4 lines */
+    -webkit-box-orient: vertical;
+  }
+
+  /* Status Container */
+  .status {
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 15px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+  }
+
+  /* Show status on hover */
+  .blog-card:hover .status {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Different Status Colors */
+  .draft {
+    background-color: rgba(243, 156, 18, 0.9); /* Orange */
+  }
+
+  .published {
+    background-color: rgba(46, 204, 113, 0.9); /* Green */
+  }
+
+  /* Buttons */
+  .blog-card a {
+    display: inline-block;
+    margin: 5px 5px 0 0;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .read-more {
+    color: #3498db;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+
+  .read-more:hover {
+    color: #2980b9;
+  }
+
+  .edit-btn {
+    background-color: #3498db;
+    color: #fff;
+  }
+
+  .delete-btn {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+
+  .edit-btn:hover {
+    background-color: #2980b9;
+  }
+
+  .delete-btn:hover {
+    background-color: #c0392b;
+  }
+
+  /* Icons */
+  .button-icon {
+    margin-right: 8px;
+    font-size: 1rem;
+    vertical-align: middle;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Welcome, <%= user.username %>!</h1>
+      <a href="/logout" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+
+    <h2 class="role">Role: <%= user.role_id === 1 ? 'Admin' : user.role_id === 2 ? 'Editor' : 'Viewer' %></h2>
+
+    <div class="actions">
+      <% if (user.role_id === 1) { %>
+        <a href="/manage-users"><i class="fas fa-users"></i> Manage Users</a>
+        <a href="/manage-blogs"><i class="fas fa-edit"></i> Manage Blogs</a>
+      <% } else if (user.role_id === 2) { %>
+        <a href="/manage-blogs"><i class="fas fa-edit"></i> Manage Blogs</a>
+      <% } %>
+    </div>
+
+    <% if (data.blogs && data.blogs.length > 0) { %>
+      <div class="blogs-container">
+        <% data.blogs.forEach(blog => { 
+          // For Editors, only show all published blogs and their own drafted blogs
+          if (user.role_id === 2 && blog.status === 'draft' && blog.author_id !== user.id) return;
+        %>
+        <div class="blog-card">
+          <h3><%= blog.title %></h3>
+          <p><%= blog.content.length > 100 ? blog.content.substring(0, 100) + '...' : blog.content %></p>
+        
+          <% if (blog.content.length > 100) { %>
+            <a href="/blogs/<%= blog.id %>" class="read-more">
+              <i class="button-icon fas fa-eye"></i> Read More
+            </a>
+          <% } %>
+        
+          <div class="status <%= blog.status === 'draft' ? 'draft' : 'published' %>">
+            <%= blog.status %>
+          </div>
+        
+          <% if (user.role_id === 2 && blog.author_id === user.id) { %>
+            <!-- Editor-specific actions -->
+            <a href="/edit-blog/<%= blog.id %>" class="edit-btn">
+              <i class="button-icon fas fa-edit"></i> Edit
+            </a>
+            <a href="/delete-blog/<%= blog.id %>"  class="delete-btn">
+              <i class="button-icon fas fa-trash"></i> Delete
+            </a>
+          <% } %>
+        </div>
+        
+        <% }); %>
+      </div>
+    <% } else { %>
+      <p class="no-blogs">No blogs available.</p>
+    <% } %>
+    
+  </div>
+</body>
+</html>

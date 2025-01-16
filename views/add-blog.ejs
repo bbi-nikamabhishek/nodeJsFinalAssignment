@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Blog</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f3f4f8;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transform: translateY(30px);
+      transition: transform 0.3s ease;
+    }
+    .container:hover {
+      transform: translateY(0);
+    }
+    h1 {
+      color: #333;
+      font-size: 2.2rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    label {
+      font-size: 1rem;
+      color: #555;
+      font-weight: 500;
+    }
+    input, textarea, select {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: #333;
+      transition: border 0.3s ease;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+      background-color: #218838;
+      transform: translateY(-3px);
+    }
+    button:active {
+      background-color: #1e7e34;
+      transform: translateY(0);
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #fff;
+      background-color: #007bff;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 6px;
+      text-align: center;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .back-link:hover {
+      background-color: #0056b3;
+      text-decoration: none;
+      transform: translateY(-3px);
+    }
+    .back-link:active {
+      background-color: #004085;
+      transform: translateY(0);
+    }
+
+    .ai-section {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border: 1px dashed #ddd;
+      border-radius: 6px;
+    }
+    .ai-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+    .ai-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .ai-button:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+    .ai-button:active {
+      background-color: #004085;
+      transform: translateY(0);
+    }
+    .ai-output {
+      margin-top: 10px;
+      white-space: pre-wrap;
+      font-size: 0.95rem;
+      color: #444;
+      background-color: #f1f1f1;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+
+    /* Responsive Styling */
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px;
+        margin: 20px;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      button {
+        padding: 12px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Add New Blog</h1>
+    <form action="/add-blog" method="POST">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" placeholder="Enter blog title" required>
+
+      <label for="content">Content:</label>
+      <textarea id="content" name="content" placeholder="Enter blog content" rows="8" required></textarea>
+
+      <!-- AI Content Generation Section -->
+      <div class="ai-section">
+        <h3>Generate Content Using AI</h3>
+        <div class="ai-controls">
+          <label for="topic">Enter topic for AI content:</label>
+          <input type="text" id="topic" name="topic" placeholder="Enter topic (e.g., AI in healthcare)" required>
+          
+          <label for="lines">Number of lines:</label>
+          <input type="number" id="lines" name="lines" min="1" max="100" placeholder="Enter number of lines" required>
+          
+          <button type="button" id="generate-ai" class="ai-button">Generate</button>
+        </div>
+        <div id="ai-output" class="ai-output" style="display: none;"></div>
+      </div>
+
+      <label for="status">Status:</label>
+      <select id="status" name="status" required>
+        <option value="Draft">Draft</option>
+        <option value="Published">Published</option>
+      </select>
+
+      <button type="submit">Add Blog</button>
+    </form>
+    <a href="/manage-blogs" class="back-link">Back to Manage Blogs</a>
+  </div>
+
+  <script>
+    document.getElementById('generate-ai').addEventListener('click', async () => {
+      const topic = document.getElementById('topic').value;
+      const lines = document.getElementById('lines').value;
+      const output = document.getElementById('ai-output');
+
+      if (!topic.trim()) {
+        alert('Please enter a valid topic.');
+        return;
+      }
+      
+      if (!lines || lines <= 0) {
+        alert('Please enter a valid number of lines.');
+        return;
+      }
+
+      try {
+        // Fetch generated content from the AI API
+        const response = await fetch('/generate-ai-content', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ topic, lines }),
+        });
+
+        const data = await response.json();
+
+        if (data.content) {
+          output.style.display = 'block';
+          output.textContent = data.content;
+
+          // Optionally, auto-fill the textarea with the generated content
+          const contentField = document.getElementById('content');
+          contentField.value = data.content;
+        } else {
+          alert(data.error || 'Failed to generate content.');
+        }
+      } catch (error) {
+        console.error('Error fetching AI content:', error);
+        alert('Failed to generate content. Please try again later.');
+      }
+    });
+  </script>
+
+</body>
+</html>

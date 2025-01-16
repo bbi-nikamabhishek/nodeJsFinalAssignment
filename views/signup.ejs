@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <style>
+    /* General styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(45deg, #ff6a00, #ffcc00);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+      width: 400px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated background effect */
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300%;
+      height: 300%;
+      background: linear-gradient(45deg, #ff6a00, #ffcc00);
+      background-size: 400% 400%;
+      animation: gradientAnimation 6s ease infinite;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Header styling */
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 25px;
+      color: #ffcc00;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* Input and select styling */
+    .signup-form input,
+    .signup-form select {
+      width: 100%;
+      padding: 15px;
+      margin: 12px 0;
+      border-radius: 10px;
+      border: 1px solid #555;
+      background-color: #333;
+      color: #fff;
+      font-size: 1.1rem;
+      outline: none;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .signup-form input:focus,
+    .signup-form select:focus {
+      border: 1px solid #ffcc00;
+      background-color: #444;
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+    }
+
+    /* Show password functionality */
+    .password-container {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .password-container input {
+      width: calc(100% - 40px);
+      padding-right: 40px; 
+    }
+
+    .show-password {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      color: #ffcc00;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .show-password:hover {
+      color: #ff5722;
+    }
+
+    /* Button styling */
+    .signup-form button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      background: linear-gradient(90deg, #ffcc00, #ffa700);
+      border: none;
+      color: #333;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .signup-form button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #ffa700, #ff8500);
+    }
+
+    /* Error message styling */
+    .error-message {
+      color: #ff5722;
+      font-size: 1rem;
+      margin-top: 10px;
+      display: none;
+      font-weight: bold;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Back to login link */
+    .back-link {
+      display: block;
+      margin-top: 30px;
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #ff5722;
+      transform: translateY(-2px);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .container {
+        width: 80%;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Create an Account</h1>
+    <form id="signup-form" action="/signup" method="POST" class="signup-form">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="email" name="email" placeholder="Email" required>
+      
+      <!-- Password field with show password functionality -->
+      <div class="password-container">
+        <input type="password" name="password" placeholder="Password" id="password" required>
+        <span class="show-password" id="toggle-password">🔒</span>
+      </div>
+      
+      <!-- Confirm password field -->
+      <div class="password-container">
+        <input type="password" name="confirm_password" placeholder="Confirm Password" id="confirm-password" required>
+        <span class="show-password" id="toggle-confirm-password">🔒</span>
+      </div>
+      
+      <!-- Role selection with placeholder -->
+      <select name="role_id" required>
+        <option value="" disabled selected>Select Role</option>
+        <option value="1">Admin</option>
+        <option value="2">Editor</option>
+        <option value="3">Viewer</option>
+      </select>
+      
+      <button type="submit">Sign Up</button>
+      <p class="error-message" id="error-message">Passwords do not match. Please try again.</p>
+    </form>
+    <a class="back-link" href="/">Back to Login</a>
+  </div>
+
+  <script>
+    // Toggle password visibility
+    const togglePassword = document.getElementById('toggle-password');
+    const password = document.getElementById('password');
+    togglePassword.addEventListener('click', () => {
+      const type = password.type === 'password' ? 'text' : 'password';
+      password.type = type;
+      togglePassword.textContent = type === 'password' ? '🔒' : '🔓';
+    });
+
+    // Toggle confirm password visibility
+    const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
+    const confirmPassword = document.getElementById('confirm-password');
+    toggleConfirmPassword.addEventListener('click', () => {
+      const type = confirmPassword.type === 'password' ? 'text' : 'password';
+      confirmPassword.type = type;
+      toggleConfirmPassword.textContent = type === 'password' ? '🔒' : '🔓';
+    });
+
+    // Confirm password validation
+    const signupForm = document.getElementById('signup-form');
+    const errorMessage = document.getElementById('error-message');
+
+    signupForm.addEventListener('submit', (event) => {
+      const passwordValue = password.value;
+      const confirmPasswordValue = confirmPassword.value;
+
+      if (passwordValue !== confirmPasswordValue) {
+        errorMessage.style.display = 'block';  // Show error message
+        event.preventDefault();  // Prevent form submission
+      } else {
+        errorMessage.style.display = 'none';  // Hide error message if passwords match
+      }
+    });
+  </script>
+
+
+</body>
+</html>
