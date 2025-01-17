@@ -1,105 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= blog.title %></title>
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f2f6f8;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: #fff;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
-    .container:hover {
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-      transform: translateY(-5px);
-    }
-    h1 {
-      color: #2c3e50;
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
-    }
-    .meta-info {
-      font-size: 1.1rem;
-      color: #7f8c8d;
-      margin-bottom: 30px;
-      border-bottom: 2px solid #ecf0f1;
-      padding-bottom: 15px;
-    }
-    .meta-info p {
-      margin: 10px 0;
-    }
-    .meta-info strong {
-      color: #34495e;
-    }
-    p {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      color: #555;
-      margin-bottom: 30px;
-    }
-    .back-btn {
-      display: inline-block;
-      padding: 12px 25px;
-      background-color: #3498db;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 500;
-      text-decoration: none;
-      border-radius: 30px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .back-btn:hover {
-      background-color: #2980b9;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    }
-    .back-btn:active {
-      background-color: #21618c;
-      box-shadow: none;
-    }
-
-    @media (max-width: 768px) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= blog.title %></title>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f2f6f8;
+        margin: 0;
+        padding: 20px;
+      }
       .container {
-        padding: 30px;
+        max-width: 800px;
+        margin: auto;
+        background: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+      .container:hover {
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
       }
       h1 {
-        font-size: 2rem;
+        color: #2c3e50;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+      }
+      .meta-info {
+        font-size: 1.1rem;
+        color: #7f8c8d;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #ecf0f1;
+        padding-bottom: 15px;
+      }
+      .meta-info p {
+        margin: 10px 0;
+      }
+      .meta-info strong {
+        color: #34495e;
       }
       p {
-        font-size: 1rem;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 30px;
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1><%= blog.title %></h1>
+      .back-btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #3498db;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 500;
+        text-decoration: none;
+        border-radius: 30px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      }
+      .back-btn:hover {
+        background-color: #2980b9;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      }
+      .back-btn:active {
+        background-color: #21618c;
+        box-shadow: none;
+      }
 
-    <div class="meta-info">
-      <!-- Display created at and updated at timestamps -->
-      <p><strong>Created At:</strong> <%= new Date(blog.createdAt).toLocaleString() %></p>
-      <% if (blog.updatedAt) { %>
-        <p><strong>Updated At:</strong> <%= new Date(blog.updatedAt).toLocaleString() %></p>
-      <% } %>
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1><%= blog.title %></h1>
+
+      <div class="meta-info">
+        <!-- Display created at and updated at timestamps -->
+        <p>
+          <strong>Created At:</strong> <%= new
+          Date(blog.createdAt).toLocaleString() %>
+        </p>
+        <% if (blog.updatedAt) { %>
+        <p>
+          <strong>Updated At:</strong> <%= new
+          Date(blog.updatedAt).toLocaleString() %>
+        </p>
+        <% } %>
+      </div>
+
+      <p><%= blog.content %></p>
+      <!-- Display the full content -->
+
+      <a href="/dashboard" class="back-btn">Back to Dashboard</a>
     </div>
-
-    <p><%= blog.content %></p> <!-- Display the full content -->
-
-    <a href="/dashboard" class="back-btn">Back to Dashboard</a>
-  </div>
- 
-</body>
+  </body>
 </html>

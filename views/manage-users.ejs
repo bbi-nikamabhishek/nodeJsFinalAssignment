@@ -1,125 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manage Users</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-      color: #333;
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 2rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    table th, table td {
-      border: 1px solid #e0e0e0;
-      padding: 12px;
-      text-align: left;
-      font-size: 1rem;
-      color: #495057;
-    }
-    table th {
-      background-color: #007bff;
-      color: #fff;
-      font-weight: bold;
-    }
-    table tr:nth-child(even) {
-      background-color: #f8f9fa;
-    }
-    table tr:hover {
-      background-color: #e9ecef;
-    }
-    .btn-delete {
-      padding: 8px 16px;
-      background-color: #dc3545;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-      font-size: 1rem;
-    }
-    .btn-delete:hover {
-      background-color: #c82333;
-    }
-    .back-btn {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 12px 20px;
-      background-color: #17a2b8;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 1.1rem;
-      text-align: center;
-      transition: background-color 0.3s ease;
-    }
-    .back-btn:hover {
-      background-color: #138496;
-    }
-    .no-users {
-      text-align: center;
-      font-size: 1.2rem;
-      color: #6c757d;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Manage Users</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if (users.length > 0) { %>
-          <% users.forEach(user => { %>
-            <tr>
-              <td><%= user.id %></td>
-              <td><%= user.username %></td>
-              <td><%= user.email %></td>
-              <td><%= user.role_id === 1 ? 'Admin' : user.role_id === 2 ? 'Editor' : 'Viewer' %></td>
-              <td>
-                <form action="/delete-user/<%= user.id %>" method="POST" style="display: inline;">
-                  <button type="submit" class="btn-delete">Delete</button>
-                </form>
-              </td>
-            </tr>
-          <% }); %>
-        <% } else { %>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Users</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 900px;
+        margin: auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      table th,
+      table td {
+        border: 1px solid #e0e0e0;
+        padding: 12px;
+        text-align: left;
+        font-size: 1rem;
+        color: #495057;
+      }
+      table th {
+        background-color: #007bff;
+        color: #fff;
+        font-weight: bold;
+      }
+      table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+      table tr:hover {
+        background-color: #e9ecef;
+      }
+      .btn-delete {
+        padding: 8px 16px;
+        background-color: #dc3545;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+        font-size: 1rem;
+      }
+      .btn-delete:hover {
+        background-color: #c82333;
+      }
+      .back-btn {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 12px 20px;
+        background-color: #17a2b8;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 1.1rem;
+        text-align: center;
+        transition: background-color 0.3s ease;
+      }
+      .back-btn:hover {
+        background-color: #138496;
+      }
+      .no-users {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Manage Users</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (users.length > 0) { %> <% users.forEach(user => { %>
+          <tr>
+            <td><%= user.id %></td>
+            <td><%= user.username %></td>
+            <td><%= user.email %></td>
+            <td>
+              <%= user.role_id === 1 ? 'Admin' : user.role_id === 2 ? 'Editor' :
+              'Viewer' %>
+            </td>
+            <td>
+              <form
+                action="/delete-user/<%= user.id %>"
+                method="POST"
+                style="display: inline"
+              >
+                <button type="submit" class="btn-delete">Delete</button>
+              </form>
+            </td>
+          </tr>
+          <% }); %> <% } else { %>
           <tr>
             <td colspan="5" class="no-users">No users found.</td>
           </tr>
-        <% } %>
-      </tbody>
-    </table>
-    <a href="/dashboard" class="back-btn">Back to Dashboard</a>
-  </div>
- 
-</body>
+          <% } %>
+        </tbody>
+      </table>
+      <a href="/dashboard" class="back-btn">Back to Dashboard</a>
+    </div>
+  </body>
 </html>
