@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome | Blog Management</title>
+  <title>Blog Management System</title>
   <style>
     /* General Reset */
     * {
@@ -14,182 +14,241 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+      background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
       color: #ffffff;
-      height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      height: 100vh;
       overflow: hidden;
+      padding: 20px;
     }
 
-    .container {
-      background: #1c2833;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      border-radius: 20px;
-      padding: 40px 30px;
+    /* Main Container */
+    .main-container {
+      width: 100%;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 20px;
+      align-items: center;
+      justify-items: center;
       text-align: center;
-      width: 400px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    h1 {
-      font-size: 2rem;
+    .header {
+      grid-column: span 3;
+    }
+
+    .header h1 {
+      font-size: 2.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #76e5fc;
+      text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
       margin-bottom: 10px;
-      color: #00bcd4;
-      text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
 
-    .subtitle {
-      font-size: 0.95rem;
-      margin-bottom: 30px;
-      color: #d1d1d1;
-      line-height: 1.5;
+    .header p {
+      font-size: 1.1rem;
+      color: #d9d9d9;
+    }
+
+    /* Features Section */
+    .feature-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      padding: 15px;
+      border-radius: 10px;
+      width: 90%;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .feature-card img {
+      width: 50px;
+      margin-bottom: 10px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      color: #ffba08;
+      margin-bottom: 5px;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: #d3d3d3;
+    }
+
+    /* Login Section */
+    .login-container {
+      grid-column: span 3;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      width: 60%;
+    }
+
+    .login-container h2 {
+      font-size: 1.8rem;
+      color: #ffba08;
+      text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+      margin-bottom: 10px;
     }
 
     .login-form {
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .login-form input,
+    .login-form button {
+      width: 100%;
+      max-width: 300px;
+      padding: 12px;
+      border-radius: 30px;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      border: none;
+      transition: all 0.3s;
     }
 
     .login-form input {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 20px;
-      border-radius: 30px;
-      border: none;
-      background: #33475b;
+      background: rgba(255, 255, 255, 0.2);
       color: #ffffff;
-      font-size: 1rem;
-      outline: none;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease-in-out;
     }
 
     .login-form input:focus {
-      background: #3c566f;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      outline: none;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 8px rgba(118, 229, 252, 0.6);
     }
 
     .password-container {
       position: relative;
+      width: 100%;
+      max-width: 300px;
     }
 
     .password-container input {
-      padding-right: 50px;
+      padding-right: 40px;
     }
 
     .password-toggle {
       position: absolute;
-      right: 15px;
+      right: 10px;
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      font-size: 1.2rem;
-      color: #00bcd4;
-      opacity: 0.8;
-      transition: opacity 0.3s;
-      user-select: none;
     }
 
-    .password-toggle:hover {
-      opacity: 1;
+    .password-toggle img {
+      width: 20px;
     }
 
     .login-form button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      background: linear-gradient(to right, #00bcd4, #008c9e);
+      background: linear-gradient(to right, #76e5fc, #008cba);
       color: #ffffff;
-      font-size: 1.1rem;
-      border-radius: 30px;
-      cursor: pointer;
       font-weight: bold;
-      transition: all 0.3s ease-in-out;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
     }
 
     .login-form button:hover {
-      background: linear-gradient(to right, #008c9e, #006f7a);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(0, 140, 158, 0.5);
+      background: linear-gradient(to right, #008cba, #76e5fc);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     }
 
-    p {
+    .login-container p {
       font-size: 0.9rem;
-      color: #b0c4de;
-      margin-top: 20px;
+      color: #d3d3d3;
     }
 
-    p a {
-      color: #00bcd4;
+    .login-container p a {
+      color: #76e5fc;
       font-weight: bold;
       text-decoration: none;
-      transition: 0.3s;
     }
 
-    p a:hover {
+    .login-container p a:hover {
       text-decoration: underline;
-      color: #ffffff;
     }
 
-    .brand-logo {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 20px;
-      background: linear-gradient(to bottom right, #00bcd4, #006f7a);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .brand-logo img {
-      width: 50%;
-    }
-
+    /* Responsive Design */
     @media (max-width: 768px) {
-      .container {
-        width: 90%;
-        padding: 30px;
+      .main-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto auto auto;
       }
 
-      h1 {
-        font-size: 1.8rem;
+      .login-container {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .main-container {
+        grid-template-columns: 1fr;
       }
 
-      .subtitle {
-        font-size: 0.9rem;
+      .login-container {
+        grid-column: span 1;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="brand-logo">
-      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Logo">
+  <div class="main-container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Blog Management</h1>
+      <p>Streamline your blogging experience with our advanced tools.</p>
     </div>
-    <h1>Welcome Back</h1>
-    <p class="subtitle">
-      Start managing your blogs with ease and professionalism.
-    </p>
-    <div class="login-form">
-      <form action="/login" method="POST">
+
+    <!-- Features -->
+    <div class="feature-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Feature Icon">
+      <h3>User-Friendly</h3>
+      <p>An intuitive and simple interface for easy blog management.</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/1250/1250620.png" alt="Feature Icon">
+      <h3>Custom Templates</h3>
+      <p>Personalize your blogs with a variety of templates.</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/876/876019.png" alt="Feature Icon">
+      <h3>Mobile Friendly</h3>
+      <p>Manage your blogs seamlessly across all devices.</p>
+    </div>
+
+    <!-- Login Section -->
+    <div class="login-container">
+      <h2>Login to Your Account</h2>
+      <form action="/login" method="POST" class="login-form">
         <input type="text" name="username" placeholder="Username" required>
         <div class="password-container">
           <input type="password" id="password" name="password" placeholder="Password" required>
-          <i class="password-toggle" id="togglePassword">
-            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Show Password" width="20">
-          </i>
+          <div class="password-toggle" id="togglePassword">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Toggle Password">
+          </div>
         </div>
         <button type="submit">Sign In</button>
       </form>
-      <p>
-        New user? <a href="/signup">Create an account</a>
-      </p>
+      <p>New user? <a href="/signup">Create an account</a></p>
     </div>
   </div>
+
   <script>
     const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('password');
@@ -203,7 +262,5 @@
           : 'https://cdn-icons-png.flaticon.com/512/565/565655.png';
     });
   </script>
-
-
 </body>
 </html>

@@ -1,211 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign Up</title>
+  <!-- Font Awesome for icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    /* General styling */
-    body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(45deg, #ff6a00, #ffcc00);
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: #fff;
-      overflow: hidden;
+      color: #333;
     }
 
     .container {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px 40px;
-      border-radius: 15px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-      width: 400px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Animated background effect */
-    .container::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 300%;
-      height: 300%;
-      background: linear-gradient(45deg, #ff6a00, #ffcc00);
-      background-size: 400% 400%;
-      animation: gradientAnimation 6s ease infinite;
-      transform: translate(-50%, -50%);
-      z-index: -1;
-    }
-
-    @keyframes gradientAnimation {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-    /* Header styling */
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 25px;
-      color: #ffcc00;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      animation: fadeIn 2s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-
-    /* Input and select styling */
-    .signup-form input,
-    .signup-form select {
-      width: 100%;
-      padding: 15px;
-      margin: 12px 0;
+      width: 360px;
+      background: #fff;
       border-radius: 10px;
-      border: 1px solid #555;
-      background-color: #333;
-      color: #fff;
-      font-size: 1.1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 24px;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #6a11cb; /* primary accent color */
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    input, select {
+      width: 100%;
+      margin-bottom: 16px;
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
       outline: none;
-      transition: all 0.3s ease-in-out;
+      transition: border 0.2s ease;
     }
 
-    .signup-form input:focus,
-    .signup-form select:focus {
-      border: 1px solid #ffcc00;
-      background-color: #444;
-      box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+    input:hover, select:hover {
+      border-color: #bbb;
     }
 
-    /* Show password functionality */
+    input:focus, select:focus {
+      border-color: #6a11cb;
+      box-shadow: 0 0 3px rgba(106, 17, 203, 0.3);
+    }
+
     .password-container {
       position: relative;
-      margin-bottom: 15px;
     }
 
     .password-container input {
-      width: calc(100% - 40px);
-      padding-right: 40px; 
+      padding-right: 40px; /* space for the toggle icon */
     }
 
-    .show-password {
+    .toggle-password {
       position: absolute;
       top: 50%;
-      right: 10px;
+      right: 12px;
       transform: translateY(-50%);
-      font-size: 1.5rem;
-      color: #ffcc00;
+      color: #6a11cb;
+      font-size: 1.1rem;
       cursor: pointer;
+    }
+
+    .toggle-password:hover {
+      color: #8e44ad;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #6a11cb, #2575fc);
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #2575fc, #6a11cb);
+      transform: scale(1.02);
+    }
+
+    .error-message {
+      display: none;
+      margin-top: 8px;
+      color: #e74c3c;
+      font-size: 0.9rem;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 16px;
+      color: #6a11cb;
+      text-decoration: none;
+      font-size: 0.9rem;
       transition: color 0.3s ease;
     }
 
-    .show-password:hover {
-      color: #ff5722;
-    }
-
-    /* Button styling */
-    .signup-form button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 20px;
-      background: linear-gradient(90deg, #ffcc00, #ffa700);
-      border: none;
-      color: #333;
-      font-size: 1.2rem;
-      font-weight: bold;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-
-    .signup-form button:hover {
-      transform: scale(1.05);
-      background: linear-gradient(90deg, #ffa700, #ff8500);
-    }
-
-    /* Error message styling */
-    .error-message {
-      color: #ff5722;
-      font-size: 1rem;
-      margin-top: 10px;
-      display: none;
-      font-weight: bold;
-      transition: opacity 0.3s ease;
-    }
-
-    /* Back to login link */
-    .back-link {
-      display: block;
-      margin-top: 30px;
-      color: #ffcc00;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s ease, transform 0.3s ease;
-    }
-
     .back-link:hover {
-      color: #ff5722;
-      transform: translateY(-2px);
+      color: #8e44ad;
     }
 
-    /* Responsive adjustments */
     @media (max-width: 480px) {
       .container {
-        width: 80%;
+        width: 90%;
         padding: 20px;
       }
-
       h1 {
         font-size: 1.5rem;
       }
     }
-
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Create an Account</h1>
-    <form id="signup-form" action="/signup" method="POST" class="signup-form">
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="email" name="email" placeholder="Email" required>
-      
-      <!-- Password field with show password functionality -->
+    <form id="signup-form" action="/signup" method="POST">
+      <input
+        type="text"
+        name="username"
+        placeholder="Username"
+        required
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        required
+      />
+
       <div class="password-container">
-        <input type="password" name="password" placeholder="Password" id="password" required>
-        <span class="show-password" id="toggle-password">🔒</span>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          required
+        />
+        <i class="fas fa-eye toggle-password" id="toggle-password"></i>
       </div>
-      
-      <!-- Confirm password field -->
+
       <div class="password-container">
-        <input type="password" name="confirm_password" placeholder="Confirm Password" id="confirm-password" required>
-        <span class="show-password" id="toggle-confirm-password">🔒</span>
+        <input
+          type="password"
+          name="confirm_password"
+          id="confirm-password"
+          placeholder="Confirm Password"
+          required
+        />
+        <i class="fas fa-eye toggle-password" id="toggle-confirm-password"></i>
       </div>
-      
-      <!-- Role selection with placeholder -->
+
       <select name="role_id" required>
         <option value="" disabled selected>Select Role</option>
         <option value="1">Admin</option>
         <option value="2">Editor</option>
         <option value="3">Viewer</option>
       </select>
-      
+
       <button type="submit">Sign Up</button>
       <p class="error-message" id="error-message">Passwords do not match. Please try again.</p>
     </form>
@@ -213,41 +196,38 @@
   </div>
 
   <script>
+    const togglePassword = document.getElementById("toggle-password");
+    const passwordInput = document.getElementById("password");
+    const toggleConfirmPassword = document.getElementById("toggle-confirm-password");
+    const confirmPasswordInput = document.getElementById("confirm-password");
+    const signupForm = document.getElementById("signup-form");
+    const errorMessage = document.getElementById("error-message");
+
     // Toggle password visibility
-    const togglePassword = document.getElementById('toggle-password');
-    const password = document.getElementById('password');
-    togglePassword.addEventListener('click', () => {
-      const type = password.type === 'password' ? 'text' : 'password';
-      password.type = type;
-      togglePassword.textContent = type === 'password' ? '🔒' : '🔓';
+    togglePassword.addEventListener("click", () => {
+      const type = passwordInput.type === "password" ? "text" : "password";
+      passwordInput.type = type;
+      togglePassword.classList.toggle("fa-eye");
+      togglePassword.classList.toggle("fa-eye-slash");
     });
 
     // Toggle confirm password visibility
-    const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
-    const confirmPassword = document.getElementById('confirm-password');
-    toggleConfirmPassword.addEventListener('click', () => {
-      const type = confirmPassword.type === 'password' ? 'text' : 'password';
-      confirmPassword.type = type;
-      toggleConfirmPassword.textContent = type === 'password' ? '🔒' : '🔓';
+    toggleConfirmPassword.addEventListener("click", () => {
+      const type = confirmPasswordInput.type === "password" ? "text" : "password";
+      confirmPasswordInput.type = type;
+      toggleConfirmPassword.classList.toggle("fa-eye");
+      toggleConfirmPassword.classList.toggle("fa-eye-slash");
     });
 
-    // Confirm password validation
-    const signupForm = document.getElementById('signup-form');
-    const errorMessage = document.getElementById('error-message');
-
-    signupForm.addEventListener('submit', (event) => {
-      const passwordValue = password.value;
-      const confirmPasswordValue = confirmPassword.value;
-
-      if (passwordValue !== confirmPasswordValue) {
-        errorMessage.style.display = 'block';  // Show error message
-        event.preventDefault();  // Prevent form submission
+    // Validate matching passwords on form submit
+    signupForm.addEventListener("submit", (event) => {
+      if (passwordInput.value !== confirmPasswordInput.value) {
+        errorMessage.style.display = "block";
+        event.preventDefault();
       } else {
-        errorMessage.style.display = 'none';  // Hide error message if passwords match
+        errorMessage.style.display = "none";
       }
     });
   </script>
-
-
 </body>
 </html>
